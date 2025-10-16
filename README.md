@@ -29,11 +29,11 @@ To deploy this application on GitHub Pages, follow these steps:
 Visit the deployed GitHub Pages URL: `https://your-username.github.io/decode-captcha-app/`.
 
 ### Query Parameters and Configuration
-- **Image Input**: The application accepts a base64-encoded PNG image data as input, which can be uploaded via the interface.
-- **Configuration Options**: Currently, there are no additional configuration options. The processing is automated once the image is provided.
+- **Image Input**: The application accepts a base64-encoded PNG image data as input, which can be uploaded via the interface or input directly through a URL parameter.
+- **Configuration Options**: The new feature includes automatic decoding of the CAPTCHA from the input base64 PNG image and returning the extracted text instantly.
 
 ### Key Features
-- **User Interface**: A simple and intuitive interface for uploading images.
+- **User Interface**: A simple and intuitive interface for uploading images, and an option to input via URL.
 - **Text Output**: Automatically outputs decoded text from the provided CAPTCHA.
 
 ## Code Explanation
