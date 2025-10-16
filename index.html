@@ -24,16 +24,23 @@
 </head>
 <body>
     <h1>Captcha Decoder</h1>
-    <img src="captcha.png" alt="Image">
+    <img id="captchaImage" alt="Image">
     <div id="result">Loading...</div>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@6/dist/tesseract.min.js"></script>
     <script>
         async function runOCR() {
+            const base64Image = "data:image/png;base64,YOUR_BASE64_STRING_HERE";
+            document.getElementById('captchaImage').src = base64Image;
+            
             const worker = await Tesseract.createWorker('eng');
             try {
-                const { data: { text } } = await worker.recognize('captcha.png');
+                const { data: { text } } = await worker.recognize(base64Image);
                 window.decodedText = text.trim().replace(/\s+/g, '');
-                document.getElementById('result').textContent = `Decoded: ${window.decodedText}`;
+                if (typeof window.decodedText === 'string' && window.decodedText.length > 0) {
+                    document.getElementById('result').textContent = `Decoded: ${window.decodedText}`;
+                } else {
+                    document.getElementById('result').textContent = 'Error: Decoding failed';
+                }
             } catch (err) {
                 document.getElementById('result').textContent = 'Error: ' + err.message;
             } finally {
