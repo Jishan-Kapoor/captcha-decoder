@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captcha Decoder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Captcha Decoder</h1>
+    <img src="captcha.png" alt="Image">
+    <div id="result">Loading...</div>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@6/dist/tesseract.min.js"></script>
+    <script>
+        async function runOCR() {
+            const worker = await Tesseract.createWorker('eng');
+            try {
+                const { data: { text } } = await worker.recognize('captcha.png');
+                window.decodedText = text.trim().replace(/\s+/g, '');
+                document.getElementById('result').textContent = `Decoded: ${window.decodedText}`;
+            } catch (err) {
+                document.getElementById('result').textContent = 'Error: ' + err.message;
+            } finally {
+                await worker.terminate();
+            }
+        }
+        document.addEventListener('DOMContentLoaded', runOCR);
+    </script>
+</body>
+</html>
